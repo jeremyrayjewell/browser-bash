@@ -632,36 +632,18 @@ Saving to: '${filename}'
             }
         });
 
-        // Boot sequence
-        function bootSequence() {
-            const bootMessages = [
-                '<span class="ansi-green">Booting Browser Terminal...</span>',
-                '<span class="ansi-cyan">Loading system modules...</span>',
-                '<span class="ansi-yellow">Initializing network subsystem...</span>',
-                '<span class="ansi-magenta">Loading CORS proxy handlers...</span>',
-                '<span class="ansi-green">✅ System ready!</span>',
-                '',
-                asciiArt.logo,
-                '',
-                '<span class="ansi-cyan">Type <span class="ansi-yellow">"help"</span> for available commands or try <span class="ansi-yellow">"curl https://aggregatron-terminal.netlify.app/"</span> here or in your computer\'s terminal to access Aggregatron content</span>',
-                ''
-            ];
-
-            let index = 0;
-            const interval = setInterval(() => {
-                if (index < bootMessages.length) {
-                    appendOutput(bootMessages[index]);
-                    index++;
-                } else {
-                    clearInterval(interval);
-                    commandInput.focus();
-                }
-            }, 300);
+        // Initialize terminal
+        function initTerminal() {
+            appendOutput(asciiArt.logo);
+            appendOutput('');
+            appendOutput('<span class="ansi-cyan">Type <span class="ansi-yellow">"help"</span> for available commands or try <span class="ansi-yellow">"curl https://aggregatron-terminal.netlify.app/"</span> here or in your computer\'s terminal to access Aggregatron content</span>');
+            appendOutput('');
+            commandInput.focus();
         }
 
-        // Start boot sequence when page loads
+        // Initialize terminal when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(bootSequence, 500);
+            initTerminal();
         });
     </script>
 </body>
