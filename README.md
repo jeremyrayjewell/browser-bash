@@ -1,4 +1,4 @@
-# Browser Bash# Browser Bash Terminal
+# Browser Bash
 
 
 
@@ -6,17 +6,17 @@ A web-based terminal emulator with real network capabilities that runs entirely 
 
 
 
-## 🚀 Features## Features
+## Features## Features
 
 
 
-- **Real Network Access**: Uses CORS proxies to make genuine HTTP requests- 🖥️ Full Linux terminal experience in the browser
+- **Real Network Access**: Uses CORS proxies to make genuine HTTP requests- Full Linux terminal experience in the browser
 
-- **Authentic curl Implementation**: Real curl with proper options, error codes, and output formatting- 🎨 Modern terminal UI with macOS-style window controls  
+- **Authentic curl Implementation**: Real curl with proper options, error codes, and output formatting-  Modern terminal UI with macOS-style window controls  
 
-- **Multiple CORS Proxy Fallbacks**: Automatically tries different proxies if one fails- ⚡ Real-time system monitoring
+- **Multiple CORS Proxy Fallbacks**: Automatically tries different proxies if one fails-  Real-time system monitoring
 
-- **Terminal Commands**: Standard Unix-like commands (ls, cat, pwd, date, uname, etc.)- 📱 Responsive design for desktop and mobile
+- **Terminal Commands**: Standard Unix-like commands (ls, cat, pwd, date, uname, etc.)-  Responsive design for desktop and mobile
 
 - **Command History**: Use arrow keys to navigate through previous commands- 🔧 Complete bash shell with standard Unix tools
 
@@ -28,7 +28,7 @@ A web-based terminal emulator with real network capabilities that runs entirely 
 
 ### Prerequisites
 
-## 🌐 Live Demo
+## Live Demo
 
 - Modern web browser with WebAssembly support
 
@@ -36,7 +36,7 @@ A web-based terminal emulator with real network capabilities that runs entirely 
 
 - Internet connection (for downloading system files)
 
-## 📖 Usage
+##  Usage
 
 ### Quick Start
 
@@ -196,7 +196,7 @@ This terminal emulator uses several clever techniques to provide real network fu
 
 
 
-## 🏗️ Technical Details## Performance Tips
+##  Technical Details## Performance Tips
 
 
 
@@ -212,7 +212,7 @@ This terminal emulator uses several clever techniques to provide real network fu
 
 
 
-## 🔧 Hosting Options### Terminal won't load
+##  Hosting Options### Terminal won't load
 
 - Ensure all required files are downloaded
 
@@ -220,7 +220,7 @@ This terminal works best on hosting platforms with permissive Content Security P
 
 - Verify local server is running properly
 
-### ✅ Recommended Platforms:
+###  Recommended Platforms:
 
 - **GitHub Pages** (Free, reliable, good CSP)### Slow performance
 
@@ -232,7 +232,7 @@ This terminal works best on hosting platforms with permissive Content Security P
 
 
 
-### ❌ Not Recommended:### Keyboard not working
+###  Not Recommended:### Keyboard not working
 
 - **Neocities** (Restrictive CSP blocks CORS proxies)- Click inside the terminal area to focus
 
@@ -240,7 +240,7 @@ This terminal works best on hosting platforms with permissive Content Security P
 
 
 
-## 📦 Installation## Development
+##  Installation## Development
 
 
 
@@ -256,7 +256,7 @@ That's it! No build process, no dependencies, no configuration needed.3. Ensure 
 
 4. Follow existing code style
 
-## 🤝 Contributing
+##  Contributing
 
 ## License
 
@@ -285,7 +285,7 @@ This project is open source and available under the [MIT License](LICENSE).
 - **Issues**: https://github.com/jeremyrayjewell/browser-bash/issues
 - **Live Demo**: https://jeremyrayjewell.github.io/browser-bash/terminal.html
 
-## ⚠️ Important Notes
+##  Important Notes
 
 - CORS proxies may have rate limits or occasional downtime
 - Some APIs may not work due to their own CORS policies
@@ -294,4 +294,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**Built with ❤️ for developers who need quick API testing without leaving the browser**
+**Built for developers who need quick API testing without leaving the browser**
