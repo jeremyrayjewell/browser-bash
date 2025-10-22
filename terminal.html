@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; connect-src 'self' https://api.allorigins.win https://cors-anywhere.herokuapp.com https://thingproxy.freeboard.io data: blob:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
-    <title>Aggregatron Terminal - Offline Ready</title>
+    <title>Aggregatron Terminal</title>
     <style>
         body {
             margin: 0;
@@ -155,13 +155,9 @@
         // ASCII Art database
         const asciiArt = {
             logo: `<span class="ansi-cyan">
-    ██████╗ ██████╗  ██████╗ ██╗    ██╗███████╗███████╗██████╗ 
-    ██╔══██╗██╔══██╗██╔═══██╗██║    ██║██╔════╝██╔════╝██╔══██╗
-    ██████╔╝██████╔╝██║   ██║██║ █╗ ██║███████╗█████╗  ██████╔╝
-    ██╔══██╗██╔══██╗██║   ██║██║███╗██║╚════██║██╔══╝  ██╔══██╗
-    ██████╔╝██║  ██║╚██████╔╝╚███╔███╔╝███████║███████╗██║  ██║
-    ╚═════╝ ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚══════╝╚══════╝╚═╝  ╚═╝
-    
+                 ┏━┓┏━╸┏━╸┏━┓┏━╸┏━╸┏━┓╺┳╸┏━┓┏━┓┏┓╻
+                 ┣━┫┃╺┓┃╺┓┣┳┛┣╸ ┃╺┓┣━┫ ┃ ┣┳┛┃ ┃┃┗┫
+                 ╹ ╹┗━┛┗━┛╹┗╸┗━╸┗━┛╹ ╹ ╹ ╹┗╸┗━┛╹ ╹    
     ████████╗███████╗██████╗ ███╗   ███╗██╗███╗   ██╗ █████╗ ██╗     
     ╚══██╔══╝██╔════╝██╔══██╗████╗ ████║██║████╗  ██║██╔══██╗██║     
        ██║   █████╗  ██████╔╝██╔████╔██║██║██╔██╗ ██║███████║██║     
@@ -169,9 +165,14 @@
        ██║   ███████╗██║  ██║██║ ╚═╝ ██║██║██║ ╚████║██║  ██║███████╗
        ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝
        
-    Web Terminal with Real Network Access</span>`
+    </span>`
         };
-
+    <span class="ansi-red">▄▄▄</span><span class="ansi-yellow">▄▄▄</span><span class="ansi-green">▄▄▄</span><span class="ansi-blue">▄▄▄</span><span class="ansi-magenta">▄▄▄</span><span class="ansi-cyan">▄▄▄</span>
+    <span class="ansi-red">█▀█</span><span class="ansi-yellow">█▀█</span><span class="ansi-green">█▀█</span><span class="ansi-blue">█▀█</span><span class="ansi-magenta">█▀█</span><span class="ansi-cyan">█▀█</span>
+    <span class="ansi-red">█ █</span><span class="ansi-yellow">█ █</span><span class="ansi-green">█ █</span><span class="ansi-blue">█ █</span><span class="ansi-magenta">█ █</span><span class="ansi-cyan">█ █</span>
+    <span class="ansi-red">▀▀▀</span><span class="ansi-yellow">▀▀▀</span><span class="ansi-green">▀▀▀</span><span class="ansi-blue">▀▀▀</span><span class="ansi-magenta">▀▀▀</span><span class="ansi-cyan">▀▀▀</span>
+    
+    Terminal Interface v1.0</span>`,
         const commands = {
             help: function() {
                 return `<span class="ansi-green">Available Commands:</span>
