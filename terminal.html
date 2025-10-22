@@ -151,8 +151,8 @@
         // Simulated file system
         const filesystem = {
             '/home/user': {
-                'readme.txt': 'Welcome to Aggregatron Records Terminal!\nUse "menu" to see available options.',
-                'links.txt': 'JRJ Enterprises: https://open.spotify.com/artist/2pHmIqZZ8f7UPt9UDgkinC\nLucre-Naut: https://open.spotify.com/artist/1xljb8IWF5AZRfoUEsBFEL'
+                'readme.txt': 'Welcome to Browser Terminal!\nA web-based terminal emulator with real curl functionality.',
+                'links.txt': 'Example APIs to test:\nhttps://httpbin.org/json\nhttps://api.github.com/zen\nhttps://jsonplaceholder.typicode.com/posts/1'
             }
         };
 
@@ -163,49 +163,26 @@
         // ASCII Art database
         const asciiArt = {
             logo: `<span class="ansi-cyan">
-    ⱯᘓᘓʁEᘓⱯꓕʁOИ  ℝ𝔼ℂ𝕆ℝ𝔻𝕊
-    ═══════════════════════
+    ██████╗ ██████╗  ██████╗ ██╗    ██╗███████╗███████╗██████╗ 
+    ██╔══██╗██╔══██╗██╔═══██╗██║    ██║██╔════╝██╔════╝██╔══██╗
+    ██████╔╝██████╔╝██║   ██║██║ █╗ ██║███████╗█████╗  ██████╔╝
+    ██╔══██╗██╔══██╗██║   ██║██║███╗██║╚════██║██╔══╝  ██╔══██╗
+    ██████╔╝██║  ██║╚██████╔╝╚███╔███╔╝███████║███████╗██║  ██║
+    ╚═════╝ ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚══════╝╚══════╝╚═╝  ╚═╝
     
-    <span class="ansi-red">▄▄▄</span><span class="ansi-yellow">▄▄▄</span><span class="ansi-green">▄▄▄</span><span class="ansi-blue">▄▄▄</span><span class="ansi-magenta">▄▄▄</span><span class="ansi-cyan">▄▄▄</span>
-    <span class="ansi-red">█▀█</span><span class="ansi-yellow">█▀█</span><span class="ansi-green">█▀█</span><span class="ansi-blue">█▀█</span><span class="ansi-magenta">█▀█</span><span class="ansi-cyan">█▀█</span>
-    <span class="ansi-red">█ █</span><span class="ansi-yellow">█ █</span><span class="ansi-green">█ █</span><span class="ansi-blue">█ █</span><span class="ansi-magenta">█ █</span><span class="ansi-cyan">█ █</span>
-    <span class="ansi-red">▀▀▀</span><span class="ansi-yellow">▀▀▀</span><span class="ansi-green">▀▀▀</span><span class="ansi-blue">▀▀▀</span><span class="ansi-magenta">▀▀▀</span><span class="ansi-cyan">▀▀▀</span>
-    
-    Terminal Interface v1.0</span>`,
-
-            jrj: `<span class="ansi-red">
-     ██╗██████╗      ██╗
-     ██║██╔══██╗     ██║
-     ██║██████╔╝     ██║
-██   ██║██╔══██╗██   ██║
-╚█████╔╝██║  ██║╚█████╔╝
- ╚════╝ ╚═╝  ╚═╝ ╚════╝</span>`,
-
-            lucre: `<span class="ansi-blue">
-██╗     ██╗   ██╗ ██████╗██████╗ ███████╗
-██║     ██║   ██║██╔════╝██╔══██╗██╔════╝
-██║     ██║   ██║██║     ██████╔╝█████╗  
-██║     ██║   ██║██║     ██╔══██╗██╔══╝  
-███████╗╚██████╔╝╚██████╗██║  ██║███████╗
-╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝
-           ███╗   ██╗ █████╗ ██╗   ██╗████████╗
-           ████╗  ██║██╔══██╗██║   ██║╚══██╔══╝
-           ██╔██╗ ██║███████║██║   ██║   ██║   
-           ██║╚██╗██║██╔══██║██║   ██║   ██║   
-           ██║ ╚████║██║  ██║╚██████╔╝   ██║   
-           ╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝    ╚═╝</span>`
+    ████████╗███████╗██████╗ ███╗   ███╗██╗███╗   ██╗ █████╗ ██╗     
+    ╚══██╔══╝██╔════╝██╔══██╗████╗ ████║██║████╗  ██║██╔══██╗██║     
+       ██║   █████╗  ██████╔╝██╔████╔██║██║██╔██╗ ██║███████║██║     
+       ██║   ██╔══╝  ██╔══██╗██║╚██╔╝██║██║██║╚██╗██║██╔══██║██║     
+       ██║   ███████╗██║  ██║██║ ╚═╝ ██║██║██║ ╚████║██║  ██║███████╗
+       ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝
+       
+    Web Terminal with Real Network Access</span>`
         };
 
         const commands = {
             help: function() {
                 return `<span class="ansi-green">Available Commands:</span>
-
-<span class="ansi-magenta">📋 Aggregatron Content:</span>
-• <span class="ansi-yellow">menu</span> - Show Aggregatron main menu
-• <span class="ansi-yellow">jrj</span> - JRJ Enterprises info
-• <span class="ansi-yellow">lucre</span> - Lucre-Naut info  
-• <span class="ansi-yellow">software</span> - Aggrega-Soft tools
-• <span class="ansi-yellow">links</span> - All streaming links
 
 <span class="ansi-magenta">🌐 Network Commands:</span>
 • <span class="ansi-yellow">curl [options] URL</span> - Transfer data from servers (real HTTP requests!)
@@ -225,94 +202,9 @@
 
 <span class="ansi-cyan">🚀 This terminal uses REAL curl via CORS proxy! Try:</span>
 <span class="ansi-white">curl https://httpbin.org/json</span>
-<span class="ansi-white">curl https://api.github.com/user</span>
+<span class="ansi-white">curl https://api.github.com/zen</span>
 <span class="ansi-white">curl -I https://jsonplaceholder.typicode.com/posts/1</span>
 <span class="ansi-yellow">Note:</span> <span class="ansi-white">Makes real HTTP requests via CORS proxy - no simulation</span>`;
-            },
-
-            menu: function() {
-                return `${asciiArt.logo}
-
-<span class="ansi-cyan">╔══════════════════════════════════════════════════════════════════════════════╗
-║</span>  <span class="ansi-white">Welcome to the Aggregatron Records Terminal Interface!</span>                   <span class="ansi-cyan">║
-║</span>                                                                              <span class="ansi-cyan">║
-║</span>  <span class="ansi-yellow">📋 MAIN MENU - Choose an option:</span>                                            <span class="ansi-cyan">║
-║</span>                                                                              <span class="ansi-cyan">║
-║</span>  <span class="ansi-green">[1]</span> <span class="ansi-white">JRJ Enterprises</span>      <span style="opacity: 0.6;">(command: jrj)</span>                         <span class="ansi-cyan">║
-║</span>  <span class="ansi-green">[2]</span> <span class="ansi-white">Lucre-Naut</span>           <span style="opacity: 0.6;">(command: lucre)</span>                       <span class="ansi-cyan">║
-║</span>  <span class="ansi-green">[3]</span> <span class="ansi-white">Aggrega-Soft Tools</span>   <span style="opacity: 0.6;">(command: software)</span>                    <span class="ansi-cyan">║
-║</span>  <span class="ansi-green">[4]</span> <span class="ansi-white">All Links</span>            <span style="opacity: 0.6;">(command: links)</span>                       <span class="ansi-cyan">║
-║</span>                                                                              <span class="ansi-cyan">║
-╚══════════════════════════════════════════════════════════════════════════════╝</span>`;
-            },
-
-            jrj: function() {
-                return `${asciiArt.jrj}
-
-<span class="ansi-yellow">🎵 JRJ ENTERPRISES</span> <span class="ansi-green">- Experimental Electronics & Ambient</span>
-
-<span class="ansi-cyan">Experimental electronics and ambient music</span>
-
-<span class="ansi-magenta">🎧 STREAMING PLATFORMS:</span>
-<span class="ansi-green">Spotify:</span> <span class="ansi-yellow">https://open.spotify.com/artist/2pHmIqZZ8f7UPt9UDgkinC</span>
-<span class="ansi-green">Bandcamp:</span> <span class="ansi-yellow">https://jrjenterprises.bandcamp.com/</span>
-
-<span style="opacity: 0.6;">← Back: type "menu"</span>`;
-            },
-
-            lucre: function() {
-                return `${asciiArt.lucre}
-
-<span class="ansi-yellow">🎵 LUCRE-NAUT</span> <span class="ansi-green">- Breaks, IDM & Left-field Club</span>
-
-<span class="ansi-cyan">Breaks, IDM, and left-field club music</span>
-
-<span class="ansi-magenta">🎧 STREAMING PLATFORMS:</span>
-<span class="ansi-green">Spotify:</span> <span class="ansi-yellow">https://open.spotify.com/artist/1xljb8IWF5AZRfoUEsBFEL</span>
-<span class="ansi-green">Bandcamp:</span> <span class="ansi-yellow">https://lucre-naut.bandcamp.com/</span>
-
-<span style="opacity: 0.6;">← Back: type "menu"</span>`;
-            },
-
-            software: function() {
-                return `<span class="ansi-magenta"> █████╗  ██████╗  ██████╗ ██████╗ ███████╗ ██████╗  █████╗ 
-██╔══██╗██╔════╝ ██╔════╝ ██╔══██╗██╔════╝██╔════╝ ██╔══██╗
-███████║██║  ███╗██║  ███╗██████╔╝█████╗  ██║  ███╗███████║
-██╔══██║██║   ██║██║   ██║██╔══██╗██╔══╝  ██║   ██║██╔══██║
-██║  ██║╚██████╔╝╚██████╔╝██║  ██║███████╗╚██████╔╝██║  ██║
-╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝
-                    ███████╗ ██████╗ ███████╗████████╗
-                    ██╔════╝██╔═══██╗██╔════╝╚══██╔══╝
-                    ███████╗██║   ██║█████╗     ██║   
-                    ╚════██║██║   ██║██╔══╝     ██║   
-                    ███████║╚██████╔╝██║        ██║   
-                    ╚══════╝ ╚═════╝ ╚═╝        ╚═╝</span>
-
-<span class="ansi-yellow">💻 AGGREGA-SOFT™</span> <span class="ansi-green">Musical Solutions</span>
-
-<span class="ansi-cyan">🔧 Piecework Splitter:</span> <span class="ansi-yellow">https://bright-capybara-8e9e2c.netlify.app/</span>
-<span class="ansi-green">• Split audio into pieces for remixing</span>
-
-<span class="ansi-cyan">🎛️  Aggregatrex5000:</span> <span class="ansi-yellow">https://aggregatron.netlify.app/</span>
-<span class="ansi-green">• Advanced audio aggregation tool</span>`;
-            },
-
-            links: function() {
-                return `<span class="ansi-white">╔══════════════════════════════════════════════════════════════════════════════╗
-║                              ALL LINKS                                      ║
-╠══════════════════════════════════════════════════════════════════════════════╣</span>
-
-<span class="ansi-yellow">🎵 JRJ ENTERPRISES</span> <span style="opacity: 0.6;">(Experimental Electronics & Ambient)</span>
-<span class="ansi-green">├─ Spotify:</span>  <span class="ansi-yellow">https://open.spotify.com/artist/2pHmIqZZ8f7UPt9UDgkinC</span>
-<span class="ansi-green">└─ Bandcamp:</span> <span class="ansi-yellow">https://jrjenterprises.bandcamp.com/</span>
-
-<span class="ansi-blue">🎵 LUCRE-NAUT</span> <span style="opacity: 0.6;">(Breaks, IDM & Left-field Club)</span>
-<span class="ansi-green">├─ Spotify:</span>  <span class="ansi-yellow">https://open.spotify.com/artist/1xljb8IWF5AZRfoUEsBFEL</span>
-<span class="ansi-green">└─ Bandcamp:</span> <span class="ansi-yellow">https://lucre-naut.bandcamp.com/</span>
-
-<span class="ansi-magenta">💻 AGGREGA-SOFT™</span> <span style="opacity: 0.6;">(Musical Solutions)</span>
-<span class="ansi-green">├─ Piecework Splitter:</span> <span class="ansi-yellow">https://bright-capybara-8e9e2c.netlify.app/</span>
-<span class="ansi-green">└─ Aggregatrex5000:</span>   <span class="ansi-yellow">https://aggregatron.netlify.app/</span>`;
             },
 
             ls: function() {
@@ -333,9 +225,9 @@
 
             uname: function(args) {
                 if (args.includes('-a')) {
-                    return 'Aggregatron-Linux 1.0.0 #1 SMP Web Browser x86_64 GNU/Linux';
+                    return 'Browser-Linux 1.0.0 #1 SMP Web Browser x86_64 GNU/Linux';
                 }
-                return 'Aggregatron-Linux';
+                return 'Browser-Linux';
             },
 
             date: function() {
@@ -595,7 +487,7 @@ Saving to: '${filename}'
             },
 
             exit: function() {
-                return '<span class="ansi-yellow">Thanks for visiting Aggregatron Records! 👋</span>';
+                return '<span class="ansi-yellow">Thanks for using Browser Terminal! 👋</span>';
             }
         };
 
@@ -668,16 +560,16 @@ Saving to: '${filename}'
         // Boot sequence
         function bootSequence() {
             const bootMessages = [
-                '<span class="ansi-green">Booting Aggregatron Terminal...</span>',
+                '<span class="ansi-green">Booting Browser Terminal...</span>',
                 '<span class="ansi-cyan">Loading system modules...</span>',
-                '<span class="ansi-yellow">Initializing audio subsystem...</span>',
-                '<span class="ansi-magenta">Loading Aggregatron Records database...</span>',
+                '<span class="ansi-yellow">Initializing network subsystem...</span>',
+                '<span class="ansi-magenta">Loading CORS proxy handlers...</span>',
                 '<span class="ansi-green">✅ System ready!</span>',
                 '',
                 asciiArt.logo,
                 '',
-                '<span class="ansi-white">Welcome to Aggregatron Records Terminal!</span>',
-                '<span class="ansi-cyan">Type <span class="ansi-yellow">"menu"</span> to see available options or <span class="ansi-yellow">"help"</span> for commands.</span>',
+                '<span class="ansi-white">Welcome to Browser Terminal!</span>',
+                '<span class="ansi-cyan">Type <span class="ansi-yellow">"help"</span> for available commands or try <span class="ansi-yellow">"curl https://httpbin.org/json"</span></span>',
                 ''
             ];
 
