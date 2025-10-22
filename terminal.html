@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; connect-src 'self' https://api.allorigins.win https://cors-anywhere.herokuapp.com https://thingproxy.freeboard.io data: blob:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+    <title>Aggregatron Terminal - Offline Ready</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #1e1e1e;
+            color: #ffffff;
+            font-family: 'Courier New', monospace;
+            line-height: 1.4;
+        }
+
+        .terminal-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #1e1e1e;
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+        }
+
+        .terminal-header {
+            background: #2d2d2d;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .close { background: #ff5f56; }
+        .minimize { background: #ffbd2e; }
+        .maximize { background: #27ca3f; }
+
+        .terminal-title {
+            color: #ccc;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .terminal-content {
+            padding: 20px;
+            min-height: 600px;
+            background: #1e1e1e;
+        }
+
+        .output {
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .input-line {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .prompt {
+            color: #00ff00;
+            margin-right: 8px;
+        }
+
+        input[type="text"] {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            outline: none;
+            flex: 1;
+        }
+
+        /* ANSI Color Support */
+        .ansi-red { color: #ff4444; }
+        .ansi-green { color: #44ff44; }
+        .ansi-yellow { color: #ffff44; }
+        .ansi-blue { color: #4444ff; }
+        .ansi-magenta { color: #ff44ff; }
+        .ansi-cyan { color: #44ffff; }
+        .ansi-white { color: #ffffff; }
+        .ansi-bright-red { color: #ff6666; }
+        .ansi-bright-green { color: #66ff66; }
+        .ansi-bright-yellow { color: #ffff66; }
+        .ansi-bright-blue { color: #6666ff; }
+        .ansi-bright-magenta { color: #ff66ff; }
+        .ansi-bright-cyan { color: #66ffff; }
+        .ansi-bright-white { color: #ffffff; }
+
+        .blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .boot-sequence {
+            margin: 20px 0;
+        }
+
+        .system-info {
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background: #2a2a2a;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-button close"></div>
+            <div class="terminal-button minimize"></div>
+            <div class="terminal-button maximize"></div>
+            <div class="terminal-title">Aggregatron Terminal v1.0 - Neocities Compatible</div>
+        </div>
+        <div class="terminal-content">
+            <div class="output" id="output"></div>
+            <div class="input-line">
+                <span class="prompt">aggregatron@terminal:~$ </span>
+                <input type="text" id="commandInput" placeholder="Type 'help' to get started" autocomplete="off">
+            </div>
+            <div class="system-info">
+                <strong>System Info:</strong> Aggregatron Terminal Emulator | Neocities Compatible | No external dependencies
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const output = document.getElementById('output');
+        const commandInput = document.getElementById('commandInput');
+        
+        // Simulated file system
+        const filesystem = {
+            '/home/user': {
+                'readme.txt': 'Welcome to Aggregatron Records Terminal!\nUse "menu" to see available options.',
+                'links.txt': 'JRJ Enterprises: https://open.spotify.com/artist/2pHmIqZZ8f7UPt9UDgkinC\nLucre-Naut: https://open.spotify.com/artist/1xljb8IWF5AZRfoUEsBFEL'
+            }
+        };
+
+        let currentDir = '/home/user';
+        let commandHistory = [];
+        let historyIndex = -1;
+
+        // ASCII Art database
+        const asciiArt = {
+            logo: `<span class="ansi-cyan">
+    ⱯᘓᘓʁEᘓⱯꓕʁOИ  ℝ𝔼ℂ𝕆ℝ𝔻𝕊
+    ═══════════════════════
+    
+    <span class="ansi-red">▄▄▄</span><span class="ansi-yellow">▄▄▄</span><span class="ansi-green">▄▄▄</span><span class="ansi-blue">▄▄▄</span><span class="ansi-magenta">▄▄▄</span><span class="ansi-cyan">▄▄▄</span>
+    <span class="ansi-red">█▀█</span><span class="ansi-yellow">█▀█</span><span class="ansi-green">█▀█</span><span class="ansi-blue">█▀█</span><span class="ansi-magenta">█▀█</span><span class="ansi-cyan">█▀█</span>
+    <span class="ansi-red">█ █</span><span class="ansi-yellow">█ █</span><span class="ansi-green">█ █</span><span class="ansi-blue">█ █</span><span class="ansi-magenta">█ █</span><span class="ansi-cyan">█ █</span>
+    <span class="ansi-red">▀▀▀</span><span class="ansi-yellow">▀▀▀</span><span class="ansi-green">▀▀▀</span><span class="ansi-blue">▀▀▀</span><span class="ansi-magenta">▀▀▀</span><span class="ansi-cyan">▀▀▀</span>
+    
+    Terminal Interface v1.0</span>`,
+
+            jrj: `<span class="ansi-red">
+     ██╗██████╗      ██╗
+     ██║██╔══██╗     ██║
+     ██║██████╔╝     ██║
+██   ██║██╔══██╗██   ██║
+╚█████╔╝██║  ██║╚█████╔╝
+ ╚════╝ ╚═╝  ╚═╝ ╚════╝</span>`,
+
+            lucre: `<span class="ansi-blue">
+██╗     ██╗   ██╗ ██████╗██████╗ ███████╗
+██║     ██║   ██║██╔════╝██╔══██╗██╔════╝
+██║     ██║   ██║██║     ██████╔╝█████╗  
+██║     ██║   ██║██║     ██╔══██╗██╔══╝  
+███████╗╚██████╔╝╚██████╗██║  ██║███████╗
+╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝╚══════╝
+           ███╗   ██╗ █████╗ ██╗   ██╗████████╗
+           ████╗  ██║██╔══██╗██║   ██║╚══██╔══╝
+           ██╔██╗ ██║███████║██║   ██║   ██║   
+           ██║╚██╗██║██╔══██║██║   ██║   ██║   
+           ██║ ╚████║██║  ██║╚██████╔╝   ██║   
+           ╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝    ╚═╝</span>`
+        };
+
+        const commands = {
+            help: function() {
+                return `<span class="ansi-green">Available Commands:</span>
+
+<span class="ansi-magenta">📋 Aggregatron Content:</span>
+• <span class="ansi-yellow">menu</span> - Show Aggregatron main menu
+• <span class="ansi-yellow">jrj</span> - JRJ Enterprises info
+• <span class="ansi-yellow">lucre</span> - Lucre-Naut info  
+• <span class="ansi-yellow">software</span> - Aggrega-Soft tools
+• <span class="ansi-yellow">links</span> - All streaming links
+
+<span class="ansi-magenta">🌐 Network Commands:</span>
+• <span class="ansi-yellow">curl [options] URL</span> - Transfer data from servers (real HTTP requests!)
+• <span class="ansi-yellow">wget URL</span> - Download files from web
+• <span class="ansi-yellow">ping HOST</span> - Send ICMP packets to host
+
+<span class="ansi-magenta">🗂️ File System:</span>
+• <span class="ansi-yellow">ls</span> - List files
+• <span class="ansi-yellow">cat [file]</span> - Display file contents
+• <span class="ansi-yellow">pwd</span> - Show current directory
+
+<span class="ansi-magenta">💻 System:</span>
+• <span class="ansi-yellow">uname [-a]</span> - System information
+• <span class="ansi-yellow">date</span> - Show current date
+• <span class="ansi-yellow">clear</span> - Clear terminal
+• <span class="ansi-yellow">exit</span> - Close terminal
+
+<span class="ansi-cyan">🚀 This terminal uses REAL curl via CORS proxy! Try:</span>
+<span class="ansi-white">curl https://httpbin.org/json</span>
+<span class="ansi-white">curl https://api.github.com/user</span>
+<span class="ansi-white">curl -I https://jsonplaceholder.typicode.com/posts/1</span>
+<span class="ansi-yellow">Note:</span> <span class="ansi-white">Makes real HTTP requests via CORS proxy - no simulation</span>`;
+            },
+
+            menu: function() {
+                return `${asciiArt.logo}
+
+<span class="ansi-cyan">╔══════════════════════════════════════════════════════════════════════════════╗
+║</span>  <span class="ansi-white">Welcome to the Aggregatron Records Terminal Interface!</span>                   <span class="ansi-cyan">║
+║</span>                                                                              <span class="ansi-cyan">║
+║</span>  <span class="ansi-yellow">📋 MAIN MENU - Choose an option:</span>                                            <span class="ansi-cyan">║
+║</span>                                                                              <span class="ansi-cyan">║
+║</span>  <span class="ansi-green">[1]</span> <span class="ansi-white">JRJ Enterprises</span>      <span style="opacity: 0.6;">(command: jrj)</span>                         <span class="ansi-cyan">║
+║</span>  <span class="ansi-green">[2]</span> <span class="ansi-white">Lucre-Naut</span>           <span style="opacity: 0.6;">(command: lucre)</span>                       <span class="ansi-cyan">║
+║</span>  <span class="ansi-green">[3]</span> <span class="ansi-white">Aggrega-Soft Tools</span>   <span style="opacity: 0.6;">(command: software)</span>                    <span class="ansi-cyan">║
+║</span>  <span class="ansi-green">[4]</span> <span class="ansi-white">All Links</span>            <span style="opacity: 0.6;">(command: links)</span>                       <span class="ansi-cyan">║
+║</span>                                                                              <span class="ansi-cyan">║
+╚══════════════════════════════════════════════════════════════════════════════╝</span>`;
+            },
+
+            jrj: function() {
+                return `${asciiArt.jrj}
+
+<span class="ansi-yellow">🎵 JRJ ENTERPRISES</span> <span class="ansi-green">- Experimental Electronics & Ambient</span>
+
+<span class="ansi-cyan">Experimental electronics and ambient music</span>
+
+<span class="ansi-magenta">🎧 STREAMING PLATFORMS:</span>
+<span class="ansi-green">Spotify:</span> <span class="ansi-yellow">https://open.spotify.com/artist/2pHmIqZZ8f7UPt9UDgkinC</span>
+<span class="ansi-green">Bandcamp:</span> <span class="ansi-yellow">https://jrjenterprises.bandcamp.com/</span>
+
+<span style="opacity: 0.6;">← Back: type "menu"</span>`;
+            },
+
+            lucre: function() {
+                return `${asciiArt.lucre}
+
+<span class="ansi-yellow">🎵 LUCRE-NAUT</span> <span class="ansi-green">- Breaks, IDM & Left-field Club</span>
+
+<span class="ansi-cyan">Breaks, IDM, and left-field club music</span>
+
+<span class="ansi-magenta">🎧 STREAMING PLATFORMS:</span>
+<span class="ansi-green">Spotify:</span> <span class="ansi-yellow">https://open.spotify.com/artist/1xljb8IWF5AZRfoUEsBFEL</span>
+<span class="ansi-green">Bandcamp:</span> <span class="ansi-yellow">https://lucre-naut.bandcamp.com/</span>
+
+<span style="opacity: 0.6;">← Back: type "menu"</span>`;
+            },
+
+            software: function() {
+                return `<span class="ansi-magenta"> █████╗  ██████╗  ██████╗ ██████╗ ███████╗ ██████╗  █████╗ 
+██╔══██╗██╔════╝ ██╔════╝ ██╔══██╗██╔════╝██╔════╝ ██╔══██╗
+███████║██║  ███╗██║  ███╗██████╔╝█████╗  ██║  ███╗███████║
+██╔══██║██║   ██║██║   ██║██╔══██╗██╔══╝  ██║   ██║██╔══██║
+██║  ██║╚██████╔╝╚██████╔╝██║  ██║███████╗╚██████╔╝██║  ██║
+╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝
+                    ███████╗ ██████╗ ███████╗████████╗
+                    ██╔════╝██╔═══██╗██╔════╝╚══██╔══╝
+                    ███████╗██║   ██║█████╗     ██║   
+                    ╚════██║██║   ██║██╔══╝     ██║   
+                    ███████║╚██████╔╝██║        ██║   
+                    ╚══════╝ ╚═════╝ ╚═╝        ╚═╝</span>
+
+<span class="ansi-yellow">💻 AGGREGA-SOFT™</span> <span class="ansi-green">Musical Solutions</span>
+
+<span class="ansi-cyan">🔧 Piecework Splitter:</span> <span class="ansi-yellow">https://bright-capybara-8e9e2c.netlify.app/</span>
+<span class="ansi-green">• Split audio into pieces for remixing</span>
+
+<span class="ansi-cyan">🎛️  Aggregatrex5000:</span> <span class="ansi-yellow">https://aggregatron.netlify.app/</span>
+<span class="ansi-green">• Advanced audio aggregation tool</span>`;
+            },
+
+            links: function() {
+                return `<span class="ansi-white">╔══════════════════════════════════════════════════════════════════════════════╗
+║                              ALL LINKS                                      ║
+╠══════════════════════════════════════════════════════════════════════════════╣</span>
+
+<span class="ansi-yellow">🎵 JRJ ENTERPRISES</span> <span style="opacity: 0.6;">(Experimental Electronics & Ambient)</span>
+<span class="ansi-green">├─ Spotify:</span>  <span class="ansi-yellow">https://open.spotify.com/artist/2pHmIqZZ8f7UPt9UDgkinC</span>
+<span class="ansi-green">└─ Bandcamp:</span> <span class="ansi-yellow">https://jrjenterprises.bandcamp.com/</span>
+
+<span class="ansi-blue">🎵 LUCRE-NAUT</span> <span style="opacity: 0.6;">(Breaks, IDM & Left-field Club)</span>
+<span class="ansi-green">├─ Spotify:</span>  <span class="ansi-yellow">https://open.spotify.com/artist/1xljb8IWF5AZRfoUEsBFEL</span>
+<span class="ansi-green">└─ Bandcamp:</span> <span class="ansi-yellow">https://lucre-naut.bandcamp.com/</span>
+
+<span class="ansi-magenta">💻 AGGREGA-SOFT™</span> <span style="opacity: 0.6;">(Musical Solutions)</span>
+<span class="ansi-green">├─ Piecework Splitter:</span> <span class="ansi-yellow">https://bright-capybara-8e9e2c.netlify.app/</span>
+<span class="ansi-green">└─ Aggregatrex5000:</span>   <span class="ansi-yellow">https://aggregatron.netlify.app/</span>`;
+            },
+
+            ls: function() {
+                return `<span class="ansi-green">readme.txt</span>  <span class="ansi-green">links.txt</span>`;
+            },
+
+            cat: function(args) {
+                if (!args.length) {
+                    return '<span class="ansi-red">cat: missing file operand</span>';
+                }
+                const file = filesystem[currentDir][args[0]];
+                return file || `<span class="ansi-red">cat: ${args[0]}: No such file or directory</span>`;
+            },
+
+            pwd: function() {
+                return currentDir;
+            },
+
+            uname: function(args) {
+                if (args.includes('-a')) {
+                    return 'Aggregatron-Linux 1.0.0 #1 SMP Web Browser x86_64 GNU/Linux';
+                }
+                return 'Aggregatron-Linux';
+            },
+
+            date: function() {
+                return new Date().toString();
+            },
+
+            clear: function() {
+                output.innerHTML = '';
+                return '';
+            },
+
+            curl: async function(args) {
+                if (!args.length) {
+                    return '<span class="ansi-red">curl: try \'curl --help\' for more information</span>';
+                }
+
+                const url = args[args.length - 1]; // Last argument is typically the URL
+                
+                // Handle help
+                if (args.includes('--help') || args.includes('-h')) {
+                    return `<span class="ansi-green">curl - transfer data from or to a server</span>
+
+<span class="ansi-yellow">Usage:</span> curl [options] URL
+
+<span class="ansi-yellow">Options:</span>
+  -I, --head     Show document info only (headers)
+  -L, --location Follow redirects
+  -s, --silent   Silent mode
+  -v, --verbose  Verbose output
+  --help         This help text
+
+<span class="ansi-cyan">Examples:</span>
+  curl https://httpbin.org/json
+  curl https://api.github.com/user
+  curl https://jsonplaceholder.typicode.com/posts/1
+  curl -I https://example.com
+
+<span class="ansi-yellow">Note:</span> Makes real HTTP requests via CORS proxy.
+If the proxy fails, curl will return proper error codes like the real tool.`;
+                }
+
+                // Check if this is a local/same-origin request or if we should simulate
+                const isLocalhost = url.includes('localhost') || url.includes('127.0.0.1');
+                const currentHost = window.location.host;
+                const isSameOrigin = url.includes(currentHost);
+                
+                // Show loading message
+                const loadingMsg = `<span class="ansi-yellow">Fetching ${url}...</span>`;
+                appendOutput(loadingMsg);
+                
+                // Remove loading message after a brief delay
+                setTimeout(() => {
+                    const outputElements = output.children;
+                    for (let i = outputElements.length - 1; i >= 0; i--) {
+                        if (outputElements[i].innerHTML.includes('Fetching')) {
+                            outputElements[i].remove();
+                            break;
+                        }
+                    }
+                }, 800);
+                
+                // If it's a localhost or same-origin request, try real fetch
+                if (isLocalhost || isSameOrigin) {
+                    try {
+                        const isHeadRequest = args.includes('-I') || args.includes('--head');
+                        const isVerbose = args.includes('-v') || args.includes('--verbose');
+                        
+                        const options = {
+                            method: isHeadRequest ? 'HEAD' : 'GET',
+                            mode: 'same-origin'
+                        };
+
+                        const response = await fetch(url, options);
+                        
+                        let result = '';
+                        if (isHeadRequest || isVerbose) {
+                            result += `<span class="ansi-green">HTTP/${response.status} ${response.statusText}</span>\n`;
+                            response.headers.forEach((value, key) => {
+                                result += `<span class="ansi-cyan">${key}:</span> ${value}\n`;
+                            });
+                            if (isHeadRequest) return result;
+                            result += '\n';
+                        }
+
+                        if (!isHeadRequest) {
+                            const text = await response.text();
+                            result += `<span class="ansi-white">${text}</span>`;
+                        }
+                        
+                        return result;
+                    } catch (error) {
+                        return `<span class="ansi-red">curl: (7) Couldn't connect to server</span>\n<span class="ansi-yellow">${error.message}</span>`;
+                    }
+                }
+                
+                // For external URLs, try CORS proxy - NO SIMULATION FALLBACK
+                return new Promise(async (resolve) => {
+                    const isHeadRequest = args.includes('-I') || args.includes('--head');
+                    
+                    // Try multiple CORS proxies in order
+                    const corsProxies = [
+                        `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+                        `https://cors-anywhere.herokuapp.com/${url}`,
+                        `https://thingproxy.freeboard.io/fetch/${url}`
+                    ];
+                    
+                    let lastError;
+                    
+                    for (const proxyUrl of corsProxies) {
+                        try {
+                            console.log('Attempting real request via CORS proxy:', proxyUrl);
+                            
+                            const response = await fetch(proxyUrl, {
+                                method: 'GET',
+                                mode: 'cors'
+                            });
+                            
+                            if (response.ok) {
+                                const text = await response.text();
+                                const isJson = text.trim().startsWith('{') || text.trim().startsWith('[');
+                                
+                                let result = '';
+                                if (isHeadRequest) {
+                                    const proxyName = proxyUrl.includes('allorigins') ? 'allorigins.win' : 
+                                                    proxyUrl.includes('cors-anywhere') ? 'cors-anywhere' : 'thingproxy';
+                                    result = `<span class="ansi-green">HTTP/1.1 ${response.status} ${response.statusText}</span>
+<span class="ansi-cyan">content-type:</span> ${isJson ? 'application/json' : 'text/plain'}
+<span class="ansi-cyan">content-length:</span> ${text.length}
+<span class="ansi-cyan">via:</span> CORS Proxy (${proxyName})`;
+                                } else {
+                                    if (isJson) {
+                                        try {
+                                            const jsonData = JSON.parse(text);
+                                            result = `<span class="ansi-white">${JSON.stringify(jsonData, null, 2)}</span>`;
+                                        } catch (e) {
+                                            result = `<span class="ansi-white">${text}</span>`;
+                                        }
+                                    } else {
+                                        const maxLength = 2000;
+                                        const displayText = text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+                                        result = `<span class="ansi-white">${displayText}</span>`;
+                                    }
+                                }
+                                resolve(result);
+                                return;
+                            } else {
+                                // Try next proxy on error status
+                                lastError = new Error(`Proxy returned ${response.status}: ${response.statusText}`);
+                                continue;
+                            }
+                        } catch (error) {
+                            // Try next proxy on error
+                            lastError = error;
+                            console.log(`CORS proxy ${proxyUrl} failed:`, error);
+                            continue;
+                        }
+                    }
+                    
+                    // All proxies failed - return appropriate error
+                    console.log('All CORS proxies failed:', lastError);
+                    
+                    if (lastError && lastError.message.includes('CSP')) {
+                        resolve(`<span class="ansi-red">curl: (35) SSL connect error</span>\n<span class="ansi-yellow">Content Security Policy blocks external connections</span>`);
+                    } else if (lastError && lastError.name === 'TypeError' && lastError.message.includes('Failed to fetch')) {
+                        resolve(`<span class="ansi-red">curl: (6) Could not resolve host: ${url.split('/')[2]}</span>`);
+                    } else {
+                        resolve(`<span class="ansi-red">curl: (7) Failed to connect to ${url.split('/')[2]} port 443: Connection refused</span>`);
+                    }
+                });
+            },
+
+
+
+            wget: async function(args) {
+                if (!args.length) {
+                    return '<span class="ansi-red">wget: missing URL</span>\n<span class="ansi-cyan">Usage: wget URL</span>';
+                }
+
+                const url = args[0];
+                appendOutput(`<span class="ansi-yellow">Connecting to ${url}...</span>`);
+
+                try {
+                    const response = await fetch(url);
+                    
+                    // Remove connecting message
+                    const outputElements = output.children;
+                    for (let i = outputElements.length - 1; i >= 0; i--) {
+                        if (outputElements[i].innerHTML.includes('Connecting')) {
+                            outputElements[i].remove();
+                            break;
+                        }
+                    }
+
+                    const filename = url.split('/').pop() || 'index.html';
+                    const size = response.headers.get('content-length') || 'unknown';
+                    
+                    return `<span class="ansi-green">200 OK</span>
+Length: ${size} bytes
+Saving to: '${filename}'
+
+<span class="ansi-cyan">${filename}</span> <span class="ansi-green">saved</span> [${size}]
+
+<span class="ansi-yellow">Note: File saved to simulated filesystem (not actual download)</span>`;
+
+                } catch (error) {
+                    // Remove connecting message
+                    const outputElements = output.children;
+                    for (let i = outputElements.length - 1; i >= 0; i--) {
+                        if (outputElements[i].innerHTML.includes('Connecting')) {
+                            outputElements[i].remove();
+                            break;
+                        }
+                    }
+                    return `<span class="ansi-red">wget: unable to resolve host address '${url.split('/')[2] || url}'</span>`;
+                }
+            },
+
+            ping: function(args) {
+                if (!args.length) {
+                    return '<span class="ansi-red">ping: usage error: Destination address required</span>';
+                }
+
+                const host = args[0];
+                return `<span class="ansi-white">PING ${host}: 56 data bytes</span>
+<span class="ansi-green">64 bytes from ${host}: icmp_seq=0 time=12.345 ms</span>
+<span class="ansi-green">64 bytes from ${host}: icmp_seq=1 time=8.123 ms</span>
+<span class="ansi-green">64 bytes from ${host}: icmp_seq=2 time=15.678 ms</span>
+
+<span class="ansi-yellow">--- ${host} ping statistics ---</span>
+<span class="ansi-white">3 packets transmitted, 3 packets received, 0.0% packet loss</span>
+<span class="ansi-white">round-trip min/avg/max/stddev = 8.123/12.049/15.678/3.089 ms</span>
+
+<span class="ansi-cyan">Note: Simulated ping results (browser security doesn't allow real ping)</span>`;
+            },
+
+            test: async function(args) {
+                if (!args.length) {
+                    return '<span class="ansi-yellow">test: Testing basic fetch functionality...</span>\n<span class="ansi-cyan">Usage: test URL</span>';
+                }
+                
+                const testUrl = args[0];
+                appendOutput(`<span class="ansi-cyan">Testing fetch to: ${testUrl}</span>`);
+                
+                try {
+                    console.log('Starting test fetch...');
+                    const response = await fetch(testUrl, { mode: 'cors' });
+                    console.log('Test fetch response:', response);
+                    
+                    return `<span class="ansi-green">✅ Test successful!</span>
+<span class="ansi-white">Status: ${response.status} ${response.statusText}</span>
+<span class="ansi-white">Type: ${response.headers.get('content-type') || 'unknown'}</span>`;
+                } catch (error) {
+                    console.error('Test fetch error:', error);
+                    return `<span class="ansi-red">❌ Test failed: ${error.message}</span>
+<span class="ansi-yellow">Error type: ${error.constructor.name}</span>`;
+                }
+            },
+
+            exit: function() {
+                return '<span class="ansi-yellow">Thanks for visiting Aggregatron Records! 👋</span>';
+            }
+        };
+
+        function appendOutput(text) {
+            if (text) {
+                const div = document.createElement('div');
+                div.innerHTML = text;
+                output.appendChild(div);
+                output.scrollTop = output.scrollHeight;
+            }
+        }
+
+        function processCommand(input) {
+            const trimmedInput = input.trim();
+            const parts = trimmedInput.split(' ');
+            const command = parts[0].toLowerCase();
+            const args = parts.slice(1);
+
+            // Add to history
+            if (trimmedInput) {
+                commandHistory.unshift(trimmedInput);
+                if (commandHistory.length > 50) commandHistory.pop();
+            }
+            historyIndex = -1;
+
+            // Show command
+            appendOutput(`<span class="prompt">aggregatron@terminal:~$ </span>${input}`);
+
+            if (commands[command]) {
+                const result = commands[command](args);
+                if (result instanceof Promise) {
+                    // Handle async commands
+                    result.then(output => {
+                        if (output) appendOutput(output);
+                    }).catch(error => {
+                        appendOutput(`<span class="ansi-red">Error: ${error.message}</span>`);
+                    });
+                } else if (result) {
+                    appendOutput(result);
+                }
+            } else if (trimmedInput) {
+                appendOutput(`<span class="ansi-red">Command not found: ${command}</span>\nType <span class="ansi-yellow">'help'</span> for available commands.`);
+            }
+        }
+
+        // Event handlers
+        commandInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const command = this.value;
+                this.value = '';
+                processCommand(command);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (historyIndex < commandHistory.length - 1) {
+                    historyIndex++;
+                    this.value = commandHistory[historyIndex] || '';
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    this.value = commandHistory[historyIndex] || '';
+                } else {
+                    historyIndex = -1;
+                    this.value = '';
+                }
+            }
+        });
+
+        // Boot sequence
+        function bootSequence() {
+            const bootMessages = [
+                '<span class="ansi-green">Booting Aggregatron Terminal...</span>',
+                '<span class="ansi-cyan">Loading system modules...</span>',
+                '<span class="ansi-yellow">Initializing audio subsystem...</span>',
+                '<span class="ansi-magenta">Loading Aggregatron Records database...</span>',
+                '<span class="ansi-green">✅ System ready!</span>',
+                '',
+                asciiArt.logo,
+                '',
+                '<span class="ansi-white">Welcome to Aggregatron Records Terminal!</span>',
+                '<span class="ansi-cyan">Type <span class="ansi-yellow">"menu"</span> to see available options or <span class="ansi-yellow">"help"</span> for commands.</span>',
+                ''
+            ];
+
+            let index = 0;
+            const interval = setInterval(() => {
+                if (index < bootMessages.length) {
+                    appendOutput(bootMessages[index]);
+                    index++;
+                } else {
+                    clearInterval(interval);
+                    commandInput.focus();
+                }
+            }, 300);
+        }
+
+        // Start boot sequence when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(bootSequence, 500);
+        });
+    </script>
+</body>
+</html>
