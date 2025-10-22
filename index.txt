@@ -36,8 +36,8 @@ AGGREGATRON RECORDS
 ║  ≡ Software & Tools:                                   ║
 ║      curl [URL]/software                               ║
 ║                                                        ║
-║  ◉ All Links:                                          ║
-║      curl [URL]/links                                  ║
+║  ◉ Videos:                                             ║
+║      curl [URL]/videos                                 ║
 ║                                                        ║
 ║  🌐 Interactive Web Terminal:                          ║
 ║      Visit aggregatron-terminal.netlify.app            ║

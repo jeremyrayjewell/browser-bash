@@ -28,5 +28,5 @@ https://jrjenterprises.bandcamp.com/
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 curl [URL]/            # Main menu
 curl [URL]/lucre       # Lucre-Naut  
-curl [URL]/links       # All links
+curl [URL]/videos      # Videos
 curl [URL]/software    # Software

@@ -36,4 +36,4 @@ https://lucre-naut.bandcamp.com/
 curl [URL]/            # Main menu
 curl [URL]/jrj         # JRJ Enterprises
 curl [URL]/software    # Software
-curl [URL]/links       # All links
+curl [URL]/videos      # Videos
