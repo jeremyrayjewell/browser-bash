@@ -42,16 +42,16 @@
     ║  ☰ AVAILABLE ENDPOINTS:                                                     ║
     ║                                                                              ║
     ║  ♪ Artists:                                                                  ║
-    ║   🅹🆁🅹 🅴🅽🆃🅴🆁🅿🆁🅸🆂🅴🆂                                                        ║
-    ║     curl https://aggregatron-terminal.netlify.app/jrj                        ║
-    ║   ≋Lucre-naut≋                                                               ║
-    ║     curl https://aggregatron-terminal.netlify.app/lucre                      ║
+    ║    ≋JRJ Enterprises≋                                                        ║
+    ║      curl https://aggregatron-terminal.netlify.app/jrj                      ║
+    ║    ≋Lucre-naut≋                                                             ║
+    ║      curl https://aggregatron-terminal.netlify.app/lucre                    ║
     ║                                                                              ║
-    ║  ≡ Software & Tools:                                                         ║
-    ║     curl https://aggregatron-terminal.netlify.app/software                   ║
+    ║  ≡ Software & Tools:                                                        ║
+    ║      curl https://aggregatron-terminal.netlify.app/software                 ║
     ║                                                                              ║
-    ║  ◉ Videos:                                                                   ║
-    ║     curl https://aggregatron-terminal.netlify.app/videos                     ║
+    ║  ◉ Videos:                                                                  ║
+    ║      curl https://aggregatron-terminal.netlify.app/videos                   ║
     ║                                                                              ║
     ╚══════════════════════════════════════════════════════════════════════════════╝
     
