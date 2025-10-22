@@ -9,17 +9,14 @@
     ║  📋 AVAILABLE ENDPOINTS:                                                     ║
     ║                                                                              ║
     ║  🎧 Artists & Music:                                                         ║
-    ║     curl https://aggregatron-terminal.netlify.app/jrj                       ║
-    ║     curl https://aggregatron-terminal.netlify.app/lucre                     ║
+    ║     curl https://aggregatron-terminal.netlify.app/jrj                        ║
+    ║     curl https://aggregatron-terminal.netlify.app/lucre                      ║
     ║                                                                              ║
     ║  💻 Software & Tools:                                                        ║
-    ║     curl https://aggregatron-terminal.netlify.app/software                  ║
+    ║     curl https://aggregatron-terminal.netlify.app/software                   ║
     ║                                                                              ║
-    ║  🔗 All Links:                                                               ║
-    ║     curl https://aggregatron-terminal.netlify.app/links                     ║
-    ║                                                                              ║
-    ║  🖥️  Interactive Terminal:                                                   ║
-    ║     https://aggregatron-terminal.netlify.app/terminal.html                  ║
+    ║  🔗 Videos:                                                               ║
+    ║     curl https://aggregatron-terminal.netlify.app/videos                      ║
     ║                                                                              ║
     ╚══════════════════════════════════════════════════════════════════════════════╝
     
