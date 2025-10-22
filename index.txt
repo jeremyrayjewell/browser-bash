@@ -39,18 +39,18 @@
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║  Welcome to the Aggregatron Records Terminal Interface!                      ║
 ║                                                                              ║
-║  ☰ AVAILABLE ENDPOINTS:                                                     ║
+║  ☰ AVAILABLE ENDPOINTS:                                                      ║
 ║                                                                              ║
 ║  ♪ Artists:                                                                  ║
-║    ≋ JRJ Enterprises                                                        ║
+║    ≋ JRJ Enterprises                                                         ║
 ║      curl https://aggregatron-terminal.netlify.app/jrj                      ║
 ║    ≋ Lucre-naut                                                             ║
 ║      curl https://aggregatron-terminal.netlify.app/lucre                    ║
 ║                                                                              ║
-║  ≡ Software & Tools:                                                        ║
+║  ≡ Software & Tools:                                                         ║
 ║      curl https://aggregatron-terminal.netlify.app/software                 ║
 ║                                                                              ║
-║  ◉ Videos:                                                                  ║
+║  ◉ Videos:                                                                   ║
 ║      curl https://aggregatron-terminal.netlify.app/videos                   ║
 ║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
