@@ -148,15 +148,7 @@
         const output = document.getElementById('output');
         const commandInput = document.getElementById('commandInput');
         
-        // Simulated file system
-        const filesystem = {
-            '/home/user': {
-                'readme.txt': 'Welcome to Browser Terminal!\nA web-based terminal emulator with real curl functionality.',
-                'links.txt': 'Example APIs to test:\nhttps://httpbin.org/json\nhttps://api.github.com/zen\nhttps://jsonplaceholder.typicode.com/posts/1'
-            }
-        };
-
-        let currentDir = '/home/user';
+        let currentDir = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) || '/';
         let commandHistory = [];
         let historyIndex = -1;
 
@@ -207,20 +199,107 @@
 <span class="ansi-yellow">Note:</span> <span class="ansi-white">Makes real HTTP requests via CORS proxy - no simulation</span>`;
             },
 
-            ls: function() {
-                return `<span class="ansi-green">readme.txt</span>  <span class="ansi-green">links.txt</span>`;
+            ls: async function(args) {
+                // Try to fetch the actual directory listing from the server
+                try {
+                    // For same-origin requests, we can try to get directory listing
+                    const currentPath = window.location.pathname;
+                    const basePath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+                    
+                    // Try to fetch directory index or use GitHub API for repository contents
+                    const repoOwner = 'jeremyrayjewell';
+                    const repoName = 'browser-bash';
+                    const githubApiUrl = `https://api.github.com/repos/${repoOwner}/${repoName}/contents`;
+                    
+                    const corsProxies = [
+                        `https://api.allorigins.win/get?url=${encodeURIComponent(githubApiUrl)}`,
+                        `https://cors-anywhere.herokuapp.com/${githubApiUrl}`
+                    ];
+                    
+                    for (const proxyUrl of corsProxies) {
+                        try {
+                            const response = await fetch(proxyUrl);
+                            if (response.ok) {
+                                const data = await response.json();
+                                
+                                // Handle allorigins.win response format
+                                const contents = data.contents ? JSON.parse(data.contents) : data;
+                                
+                                if (Array.isArray(contents)) {
+                                    let output = '';
+                                    contents.forEach(item => {
+                                        const color = item.type === 'dir' ? 'ansi-blue' : 'ansi-green';
+                                        const suffix = item.type === 'dir' ? '/' : '';
+                                        output += `<span class="${color}">${item.name}${suffix}</span>  `;
+                                    });
+                                    return output || '<span class="ansi-yellow">Empty directory</span>';
+                                }
+                            }
+                        } catch (error) {
+                            console.log(`GitHub API proxy ${proxyUrl} failed:`, error);
+                            continue;
+                        }
+                    }
+                    
+                    // If GitHub API fails, try to detect files by attempting to fetch known files
+                    const knownFiles = ['terminal.html', 'README.md', 'index.txt', 'jrj', 'lucre', 'software', 'links'];
+                    const existingFiles = [];
+                    
+                    for (const file of knownFiles) {
+                        try {
+                            const response = await fetch(file, { method: 'HEAD' });
+                            if (response.ok) {
+                                existingFiles.push(file);
+                            }
+                        } catch (error) {
+                            // File doesn't exist or can't access it
+                        }
+                    }
+                    
+                    if (existingFiles.length > 0) {
+                        let output = '';
+                        existingFiles.forEach(file => {
+                            const color = file.endsWith('.html') ? 'ansi-cyan' : 
+                                        file.endsWith('.md') ? 'ansi-yellow' : 'ansi-green';
+                            output += `<span class="${color}">${file}</span>  `;
+                        });
+                        return output + `\n<span class="ansi-yellow">Note: Detected ${existingFiles.length} accessible files</span>`;
+                    }
+                    
+                    // Final fallback - show error message
+                    return '<span class="ansi-red">ls: cannot access directory: Permission denied</span>\n<span class="ansi-yellow">Note: Browser security prevents real directory listing</span>';
+                    
+                } catch (error) {
+                    return `<span class="ansi-red">ls: error reading directory: ${error.message}</span>`;
+                }
             },
 
-            cat: function(args) {
+            cat: async function(args) {
                 if (!args.length) {
                     return '<span class="ansi-red">cat: missing file operand</span>';
                 }
-                const file = filesystem[currentDir][args[0]];
-                return file || `<span class="ansi-red">cat: ${args[0]}: No such file or directory</span>`;
+                
+                const filename = args[0];
+                
+                try {
+                    // Try to fetch the actual file
+                    const response = await fetch(filename);
+                    
+                    if (response.ok) {
+                        const content = await response.text();
+                        return `<span class="ansi-white">${content}</span>`;
+                    } else if (response.status === 404) {
+                        return `<span class="ansi-red">cat: ${filename}: No such file or directory</span>`;
+                    } else {
+                        return `<span class="ansi-red">cat: ${filename}: Permission denied</span>`;
+                    }
+                } catch (error) {
+                    return `<span class="ansi-red">cat: ${filename}: ${error.message}</span>`;
+                }
             },
 
             pwd: function() {
-                return currentDir;
+                return window.location.href;
             },
 
             uname: function(args) {
@@ -500,7 +579,7 @@ Saving to: '${filename}'
             }
         }
 
-        function processCommand(input) {
+        async function processCommand(input) {
             const trimmedInput = input.trim();
             const parts = trimmedInput.split(' ');
             const command = parts[0].toLowerCase();
@@ -517,16 +596,13 @@ Saving to: '${filename}'
             appendOutput(`<span class="prompt">aggregatron@terminal:~$ </span>${input}`);
 
             if (commands[command]) {
-                const result = commands[command](args);
-                if (result instanceof Promise) {
-                    // Handle async commands
-                    result.then(output => {
-                        if (output) appendOutput(output);
-                    }).catch(error => {
-                        appendOutput(`<span class="ansi-red">Error: ${error.message}</span>`);
-                    });
-                } else if (result) {
-                    appendOutput(result);
+                try {
+                    const result = await commands[command](args);
+                    if (result) {
+                        appendOutput(result);
+                    }
+                } catch (error) {
+                    appendOutput(`<span class="ansi-red">Error: ${error.message}</span>`);
                 }
             } else if (trimmedInput) {
                 appendOutput(`<span class="ansi-red">Command not found: ${command}</span>\nType <span class="ansi-yellow">'help'</span> for available commands.`);
