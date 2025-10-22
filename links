@@ -1,0 +1,42 @@
+██╗     ██╗███╗   ██╗██╗  ██╗███████╗
+██║     ██║████╗  ██║██║ ██╔╝██╔════╝
+██║     ██║██╔██╗ ██║█████╔╝ ███████╗
+██║     ██║██║╚██╗██║██╔═██╗ ╚════██║
+███████╗██║██║ ╚████║██║  ██╗███████║
+╚══════╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝
+
+🔗 ALL AGGREGATRON LINKS
+
+Complete directory of Aggregatron Records platforms,
+tools, and resources.
+
+♪ MUSIC STREAMING:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎵 JRJ Enterprises
+   Spotify: https://open.spotify.com/
+           artist/2pHmIqZZ8f7UPt9UDgkinC
+   Bandcamp: https://jrjenterprises.bandcamp.com/
+
+🎵 Lucre-Naut  
+   Spotify: https://open.spotify.com/
+           artist/1xljb8IWF5AZRfoUEsBFEL
+   Bandcamp: https://lucre-naut.bandcamp.com/
+
+🔧 SOFTWARE TOOLS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎛️  Piecework Splitter
+    https://bright-capybara-8e9e2c.netlify.app/
+
+🎚️  Aggregatrex5000
+    https://aggregatron.netlify.app/
+
+🌐 WEB TERMINAL:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    https://aggregatron-terminal.netlify.app/
+
+◉ EXPLORE MORE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+curl [URL]/            # Main menu  
+curl [URL]/jrj         # JRJ Enterprises
+curl [URL]/lucre       # Lucre-Naut
+curl [URL]/software    # Software tools

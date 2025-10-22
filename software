@@ -17,24 +17,25 @@ Innovative software tools for audio manipulation, composition,
 and creative sound exploration.
 
 🔧 AVAILABLE TOOLS:
-━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 🎛️  Piecework Splitter
-    Split audio into pieces for remixing and reconstruction
+    Split audio into pieces for remixing
     → https://bright-capybara-8e9e2c.netlify.app/
 
 🎚️  Aggregatrex5000
-    Advanced audio aggregation and manipulation tool
+    Advanced audio aggregation tool
     → https://aggregatron.netlify.app/
 
 ※ COMING SOON:
-━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 • Real-time audio synthesis engine
-• Multi-dimensional sample slicer
+• Multi-dimensional sample slicer  
 • AI-assisted composition tools
 
 ◉ EXPLORE MORE:
-━━━━━━━━━━━━━━━━
-curl https://aggregatron-terminal.netlify.app/        # Main menu
-curl https://aggregatron-terminal.netlify.app/jrj     # JRJ Enterprises
-curl https://aggregatron-terminal.netlify.app/lucre   # Lucre-Naut
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+curl [URL]/            # Main menu
+curl [URL]/jrj         # JRJ Enterprises
+curl [URL]/lucre       # Lucre-Naut
+curl [URL]/links       # All links
