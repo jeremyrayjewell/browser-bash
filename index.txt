@@ -1,0 +1,29 @@
+    ⱯᘓᘓʁEᘓⱯꓕʁOИ  ℝ𝔼ℂ𝕆ℝ𝔻𝕊
+    ═══════════════════════
+    
+    🎵 AGGREGATRON RECORDS API 🎵
+    
+    ╔══════════════════════════════════════════════════════════════════════════════╗
+    ║  Welcome to the Aggregatron Records Terminal Interface!                      ║
+    ║                                                                              ║
+    ║  📋 AVAILABLE ENDPOINTS:                                                     ║
+    ║                                                                              ║
+    ║  🎧 Artists & Music:                                                         ║
+    ║     curl https://aggregatron-terminal.netlify.app/jrj                       ║
+    ║     curl https://aggregatron-terminal.netlify.app/lucre                     ║
+    ║                                                                              ║
+    ║  💻 Software & Tools:                                                        ║
+    ║     curl https://aggregatron-terminal.netlify.app/software                  ║
+    ║                                                                              ║
+    ║  🔗 All Links:                                                               ║
+    ║     curl https://aggregatron-terminal.netlify.app/links                     ║
+    ║                                                                              ║
+    ║  🖥️  Interactive Terminal:                                                   ║
+    ║     https://aggregatron-terminal.netlify.app/terminal.html                  ║
+    ║                                                                              ║
+    ╚══════════════════════════════════════════════════════════════════════════════╝
+    
+    💡 Try piping through less for easier reading:
+       curl https://aggregatron-terminal.netlify.app/jrj | less
+    
+    🔥 Or use the interactive terminal for real-time exploration!
