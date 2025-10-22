@@ -36,26 +36,26 @@
                               ░░ ░░ ░░░░░░░░░░░░░░               ░░░░░░░                            
                                 ░░░░░░░░░▒▒▒▒░                  ░▒▒▒░░                              
 
-    ╔══════════════════════════════════════════════════════════════════════════════╗
-    ║  Welcome to the Aggregatron Records Terminal Interface!                      ║
-    ║                                                                              ║
-    ║  ☰ AVAILABLE ENDPOINTS:                                                     ║
-    ║                                                                              ║
-    ║  ♪ Artists:                                                                  ║
-    ║    ≋JRJ Enterprises≋                                                        ║
-    ║      curl https://aggregatron-terminal.netlify.app/jrj                      ║
-    ║    ≋Lucre-naut≋                                                             ║
-    ║      curl https://aggregatron-terminal.netlify.app/lucre                    ║
-    ║                                                                              ║
-    ║  ≡ Software & Tools:                                                        ║
-    ║      curl https://aggregatron-terminal.netlify.app/software                 ║
-    ║                                                                              ║
-    ║  ◉ Videos:                                                                  ║
-    ║      curl https://aggregatron-terminal.netlify.app/videos                   ║
-    ║                                                                              ║
-    ╚══════════════════════════════════════════════════════════════════════════════╝
-    
-    ※ Try piping through less for easier reading:
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  Welcome to the Aggregatron Records Terminal Interface!                      ║
+║                                                                              ║
+║  ☰ AVAILABLE ENDPOINTS:                                                     ║
+║                                                                              ║
+║  ♪ Artists:                                                                  ║
+║    ≋ JRJ Enterprises                                                        ║
+║      curl https://aggregatron-terminal.netlify.app/jrj                      ║
+║    ≋ Lucre-naut                                                             ║
+║      curl https://aggregatron-terminal.netlify.app/lucre                    ║
+║                                                                              ║
+║  ≡ Software & Tools:                                                        ║
+║      curl https://aggregatron-terminal.netlify.app/software                 ║
+║                                                                              ║
+║  ◉ Videos:                                                                  ║
+║      curl https://aggregatron-terminal.netlify.app/videos                   ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+※ Try piping through less for easier reading:
        curl https://aggregatron-terminal.netlify.app/jrj | less
     
     ★ Or use the interactive terminal for real-time exploration!
