@@ -130,7 +130,7 @@
             <div class="terminal-button close"></div>
             <div class="terminal-button minimize"></div>
             <div class="terminal-button maximize"></div>
-            <div class="terminal-title">Aggregatron Terminal v1.0 - Neocities Compatible</div>
+            <div class="terminal-title">Aggregatron Web Terminal v1.0</div>
         </div>
         <div class="terminal-content">
             <div class="output" id="output"></div>
@@ -139,7 +139,7 @@
                 <input type="text" id="commandInput" placeholder="Type 'help' to get started" autocomplete="off">
             </div>
             <div class="system-info">
-                <strong>System Info:</strong> Aggregatron Terminal Emulator | Neocities Compatible | No external dependencies
+                <strong>System Info:</strong> Aggregatron Web Terminal Emulator 
             </div>
         </div>
     </div>
@@ -154,22 +154,25 @@
 
         // ASCII Art database
         const asciiArt = {
-            logo: `<span class="ansi-cyan">
-                 ┏━┓┏━╸┏━╸┏━┓┏━╸┏━╸┏━┓╺┳╸┏━┓┏━┓┏┓╻
-                 ┣━┫┃╺┓┃╺┓┣┳┛┣╸ ┃╺┓┣━┫ ┃ ┣┳┛┃ ┃┃┗┫
-                 ╹ ╹┗━┛┗━┛╹┗╸┗━╸┗━┛╹ ╹ ╹ ╹┗╸┗━┛╹ ╹    
-    ████████╗███████╗██████╗ ███╗   ███╗██╗███╗   ██╗ █████╗ ██╗     
-    ╚══██╔══╝██╔════╝██╔══██╗████╗ ████║██║████╗  ██║██╔══██╗██║     
-       ██║   █████╗  ██████╔╝██╔████╔██║██║██╔██╗ ██║███████║██║     
-       ██║   ██╔══╝  ██╔══██╗██║╚██╔╝██║██║██║╚██╗██║██╔══██║██║     
-       ██║   ███████╗██║  ██║██║ ╚═╝ ██║██║██║ ╚████║██║  ██║███████╗
-       ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝
-       
-    <span class="ansi-red">▄▄▄</span><span class="ansi-yellow">▄▄▄</span><span class="ansi-green">▄▄▄</span><span class="ansi-blue">▄▄▄</span><span class="ansi-magenta">▄▄▄</span><span class="ansi-cyan">▄▄▄</span><span class="ansi-red">▄▄▄</span><span class="ansi-yellow">▄▄▄</span><span class="ansi-green">▄▄▄</span><span class="ansi-blue">▄▄▄</span><span class="ansi-magenta">▄▄▄</span><span class="ansi-cyan">▄▄▄</span><span class="ansi-red">▄▄▄</span><span class="ansi-yellow">▄▄▄</span><span class="ansi-green">▄▄▄</span><span class="ansi-blue">▄▄▄</span><span class="ansi-magenta">▄▄▄</span><span class="ansi-cyan">▄▄▄</span><span class="ansi-red">▄▄▄</span><span class="ansi-yellow">▄▄▄</span><span class="ansi-green">▄▄▄</span><span class="ansi-blue">▄▄▄</span><span class="ansi-magenta">▄▄▄</span><span class="ansi-cyan">▄▄▄</span>
-    <span class="ansi-red">█▀█</span><span class="ansi-yellow">█▀█</span><span class="ansi-green">█▀█</span><span class="ansi-blue">█▀█</span><span class="ansi-magenta">█▀█</span><span class="ansi-cyan">█▀█</span><span class="ansi-red">█▀█</span><span class="ansi-yellow">█▀█</span><span class="ansi-green">█▀█</span><span class="ansi-blue">█▀█</span><span class="ansi-magenta">█▀█</span><span class="ansi-cyan">█▀█</span><span class="ansi-red">█▀█</span><span class="ansi-yellow">█▀█</span><span class="ansi-green">█▀█</span><span class="ansi-blue">█▀█</span><span class="ansi-magenta">█▀█</span><span class="ansi-cyan">█▀█</span><span class="ansi-red">█▀█</span><span class="ansi-yellow">█▀█</span><span class="ansi-green">█▀█</span><span class="ansi-blue">█▀█</span><span class="ansi-magenta">█▀█</span><span class="ansi-cyan">█▀█</span>
-    <span class="ansi-red">█ █</span><span class="ansi-yellow">█ █</span><span class="ansi-green">█ █</span><span class="ansi-blue">█ █</span><span class="ansi-magenta">█ █</span><span class="ansi-cyan">█ █</span><span class="ansi-red">█ █</span><span class="ansi-yellow">█ █</span><span class="ansi-green">█ █</span><span class="ansi-blue">█ █</span><span class="ansi-magenta">█ █</span><span class="ansi-cyan">█ █</span><span class="ansi-red">█ █</span><span class="ansi-yellow">█ █</span><span class="ansi-green">█ █</span><span class="ansi-blue">█ █</span><span class="ansi-magenta">█ █</span><span class="ansi-cyan">█ █</span><span class="ansi-red">█ █</span><span class="ansi-yellow">█ █</span><span class="ansi-green">█ █</span><span class="ansi-blue">█ █</span><span class="ansi-magenta">█ █</span><span class="ansi-cyan">█ █</span>
-    <span class="ansi-red">▀▀▀</span><span class="ansi-yellow">▀▀▀</span><span class="ansi-green">▀▀▀</span><span class="ansi-blue">▀▀▀</span><span class="ansi-magenta">▀▀▀</span><span class="ansi-cyan">▀▀▀</span><span class="ansi-red">▀▀▀</span><span class="ansi-yellow">▀▀▀</span><span class="ansi-green">▀▀▀</span><span class="ansi-blue">▀▀▀</span><span class="ansi-magenta">▀▀▀</span><span class="ansi-cyan">▀▀▀</span><span class="ansi-red">▀▀▀</span><span class="ansi-yellow">▀▀▀</span><span class="ansi-green">▀▀▀</span><span class="ansi-blue">▀▀▀</span><span class="ansi-magenta">▀▀▀</span><span class="ansi-cyan">▀▀▀</span><span class="ansi-red">▀▀▀</span><span class="ansi-yellow">▀▀▀</span><span class="ansi-green">▀▀▀</span><span class="ansi-blue">▀▀▀</span><span class="ansi-magenta">▀▀▀</span><span class="ansi-cyan">▀▀▀</span>
-    Welcome to Aggregatron Web Terminal Interface v1.0</span>`
+            logo: `<div style="text-align: center;">
+<span class="ansi-magenta">                     ┏━┓┏━╸┏━╸┏━┓┏━╸┏━╸┏━┓╺┳╸┏━┓┏━┓┏┓╻</span>
+<span class="ansi-cyan">                     ┣━┫┃╺┓┃╺┓┣┳┛┣╸ ┃╺┓┣━┫ ┃ ┣┳┛┃ ┃┃┗┫</span>
+<span class="ansi-yellow">                     ╹ ╹┗━┛┗━┛╹┗╸┗━╸┗━┛╹ ╹ ╹ ╹┗╸┗━┛╹ ╹</span>
+
+<span class="ansi-green">        ████████╗███████╗██████╗ ███╗   ███╗██╗███╗   ██╗ █████╗ ██╗</span>     
+<span class="ansi-blue">        ╚══██╔══╝██╔════╝██╔══██╗████╗ ████║██║████╗  ██║██╔══██╗██║</span>     
+<span class="ansi-red">           ██║   █████╗  ██████╔╝██╔████╔██║██║██╔██╗ ██║███████║██║</span>     
+<span class="ansi-yellow">           ██║   ██╔══╝  ██╔══██╗██║╚██╔╝██║██║██║╚██╗██║██╔══██║██║</span>     
+<span class="ansi-magenta">           ██║   ███████╗██║  ██║██║ ╚═╝ ██║██║██║ ╚████║██║  ██║███████╗</span>
+<span class="ansi-cyan">           ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝</span>
+
+        <span class="ansi-red">▄▄▄</span><span class="ansi-yellow">▄▄▄</span><span class="ansi-green">▄▄▄</span><span class="ansi-blue">▄▄▄</span><span class="ansi-magenta">▄▄▄</span><span class="ansi-cyan">▄▄▄</span><span class="ansi-red">▄▄▄</span><span class="ansi-yellow">▄▄▄</span><span class="ansi-green">▄▄▄</span><span class="ansi-blue">▄▄▄</span><span class="ansi-magenta">▄▄▄</span><span class="ansi-cyan">▄▄▄</span><span class="ansi-red">▄▄▄</span><span class="ansi-yellow">▄▄▄</span><span class="ansi-green">▄▄▄</span><span class="ansi-blue">▄▄▄</span><span class="ansi-magenta">▄▄▄</span><span class="ansi-cyan">▄▄▄</span><span class="ansi-red">▄▄▄</span><span class="ansi-yellow">▄▄▄</span><span class="ansi-green">▄▄▄</span><span class="ansi-blue">▄▄▄</span>
+        <span class="ansi-red">█▀█</span><span class="ansi-yellow">█▀█</span><span class="ansi-green">█▀█</span><span class="ansi-blue">█▀█</span><span class="ansi-magenta">█▀█</span><span class="ansi-cyan">█▀█</span><span class="ansi-red">█▀█</span><span class="ansi-yellow">█▀█</span><span class="ansi-green">█▀█</span><span class="ansi-blue">█▀█</span><span class="ansi-magenta">█▀█</span><span class="ansi-cyan">█▀█</span><span class="ansi-red">█▀█</span><span class="ansi-yellow">█▀█</span><span class="ansi-green">█▀█</span><span class="ansi-blue">█▀█</span><span class="ansi-magenta">█▀█</span><span class="ansi-cyan">█▀█</span><span class="ansi-red">█▀█</span><span class="ansi-yellow">█▀█</span><span class="ansi-green">█▀█</span><span class="ansi-blue">█▀█</span>
+        <span class="ansi-red">█ █</span><span class="ansi-yellow">█ █</span><span class="ansi-green">█ █</span><span class="ansi-blue">█ █</span><span class="ansi-magenta">█ █</span><span class="ansi-cyan">█ █</span><span class="ansi-red">█ █</span><span class="ansi-yellow">█ █</span><span class="ansi-green">█ █</span><span class="ansi-blue">█ █</span><span class="ansi-magenta">█ █</span><span class="ansi-cyan">█ █</span><span class="ansi-red">█ █</span><span class="ansi-yellow">█ █</span><span class="ansi-green">█ █</span><span class="ansi-blue">█ █</span><span class="ansi-magenta">█ █</span><span class="ansi-cyan">█ █</span><span class="ansi-red">█ █</span><span class="ansi-yellow">█ █</span><span class="ansi-green">█ █</span><span class="ansi-blue">█ █</span>
+        <span class="ansi-red">▀▀▀</span><span class="ansi-yellow">▀▀▀</span><span class="ansi-green">▀▀▀</span><span class="ansi-blue">▀▀▀</span><span class="ansi-magenta">▀▀▀</span><span class="ansi-cyan">▀▀▀</span><span class="ansi-red">▀▀▀</span><span class="ansi-yellow">▀▀▀</span><span class="ansi-green">▀▀▀</span><span class="ansi-blue">▀▀▀</span><span class="ansi-magenta">▀▀▀</span><span class="ansi-cyan">▀▀▀</span><span class="ansi-red">▀▀▀</span><span class="ansi-yellow">▀▀▀</span><span class="ansi-green">▀▀▀</span><span class="ansi-blue">▀▀▀</span><span class="ansi-magenta">▀▀▀</span><span class="ansi-cyan">▀▀▀</span><span class="ansi-red">▀▀▀</span><span class="ansi-yellow">▀▀▀</span><span class="ansi-green">▀▀▀</span><span class="ansi-blue">▀▀▀</span>
+
+<span class="ansi-bright-cyan">                Welcome to Aggregatron Web Terminal Interface v1.0</span>
+</div>`
         };
         const commands = {
             help: function() {
